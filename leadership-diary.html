@@ -760,6 +760,141 @@ footer .foot-links a {
 
 footer .foot-links a:hover { color: var(--blue); }
 
+/* ── MURAL BOARD ── */
+.mural-upload-zone {
+  border: 1.5px dashed #ddd;
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  transition: border-color .15s, background .15s;
+  margin-bottom: 32px;
+}
+.mural-upload-zone:hover,
+.mural-upload-zone.dragover {
+  border-color: var(--blue);
+  background: #f0f6ff;
+  color: var(--blue);
+}
+.mural-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.mural-tile {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f2f2f2;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+}
+.mural-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .2s;
+}
+.mural-tile:hover img { transform: scale(1.04); }
+.mural-tile-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.55));
+  padding: 20px 10px 8px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .15s;
+}
+.mural-tile:hover .mural-tile-caption { opacity: 1; }
+
+/* ── MURAL LIGHTBOX ── */
+.mural-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+.mural-lightbox.open { display: flex; }
+.mural-lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.mural-lightbox-inner img {
+  max-width: 90vw;
+  max-height: 78vh;
+  border-radius: 12px;
+  display: block;
+  object-fit: contain;
+}
+.mural-lightbox-close {
+  position: absolute;
+  top: -40px; right: 0;
+  background: none;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff;
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .15s;
+}
+.mural-lightbox-close:hover { border-color: #fff; }
+.mural-lightbox-footer {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+}
+.mural-caption-input {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  padding: 8px 16px;
+  color: #fff;
+  outline: none;
+  transition: border-color .15s;
+}
+.mural-caption-input::placeholder { color: rgba(255,255,255,0.35); }
+.mural-caption-input:focus { border-color: rgba(255,255,255,0.6); }
+.mural-delete-btn {
+  font-family: var(--font-body);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 1.5px solid rgba(255,100,100,0.5);
+  color: rgba(255,120,120,1);
+  border-radius: 100px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  flex-shrink: 0;
+}
+.mural-delete-btn:hover { background: rgba(255,80,80,0.8); color: #fff; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   main { margin-left: 0; }
@@ -927,6 +1062,8 @@ footer .foot-links a:hover { color: var(--blue); }
     <li><a href="#timeline"><span class="entry-dot"></span>Timeline</a></li>
     <span class="nav-section-label">Weekly Entries</span>
     <div id="nav-entries"></div>
+    <span class="nav-section-label">Visual</span>
+    <li><a href="#mural"><span class="entry-dot"></span>Mural</a></li>
   </ul>
   <div class="nav-footer">
     Module 2 — Self Leadership<br>
@@ -1067,6 +1204,24 @@ footer .foot-links a:hover { color: var(--blue); }
     </div>
   </section>
 
+  <!-- MURAL BOARD -->
+  <section class="section" id="mural">
+    <div class="section-header">
+      <span class="section-dot"></span>
+      <span class="section-num">Visual</span>
+      <h2 class="section-title">MURAL</h2>
+    </div>
+
+    <div class="mural-upload-zone" id="mural-drop-zone" onclick="document.getElementById('mural-file-input').click()">
+      <span id="mural-drop-text">Drop images here or click to browse</span>
+      <input type="file" id="mural-file-input" accept="image/*" multiple style="display:none;" onchange="handleMuralFiles(this.files)">
+    </div>
+
+    <div class="mural-grid" id="mural-grid">
+      <!-- tiles injected by JS -->
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <a href="https://www.joshyuledesign.com" target="_blank" class="foot-name">JOSH YULE</a>
@@ -1086,6 +1241,18 @@ footer .foot-links a:hover { color: var(--blue); }
 </div>
 
 </main>
+</div>
+
+<!-- ── MURAL LIGHTBOX ── -->
+<div class="mural-lightbox" id="mural-lightbox" onclick="closeLightbox(event)">
+  <div class="mural-lightbox-inner">
+    <button class="mural-lightbox-close" onclick="closeMuralLightbox()">✕</button>
+    <img id="mural-lightbox-img" src="" alt="">
+    <div class="mural-lightbox-footer">
+      <input class="mural-caption-input" id="mural-caption-input" type="text" placeholder="Add a caption…" oninput="updateMuralCaption()">
+      <button class="mural-delete-btn" onclick="deleteMuralImage()">Delete</button>
+    </div>
+  </div>
 </div>
 
 <!-- ── ADD ENTRY MODAL ── -->
@@ -1689,10 +1856,97 @@ function importEntries(input) {
   reader.readAsText(file);
 }
 
+// ── MURAL BOARD ──
+function loadMural() {
+  try { return JSON.parse(localStorage.getItem('muralImages') || '[]'); } catch { return []; }
+}
+function saveMural(images) {
+  localStorage.setItem('muralImages', JSON.stringify(images));
+}
+
+function renderMural() {
+  const grid = document.getElementById('mural-grid');
+  const images = loadMural();
+  grid.innerHTML = images.map((item, i) => `
+    <div class="mural-tile" onclick="openLightbox(${i})">
+      <img src="${item.src}" alt="${item.caption || ''}">
+      ${item.caption ? `<div class="mural-tile-caption">${item.caption}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function handleMuralFiles(files) {
+  const images = loadMural();
+  const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (!imageFiles.length) return;
+  let loaded = 0;
+  imageFiles.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      images.unshift({ src: e.target.result, caption: '' });
+      loaded++;
+      if (loaded === imageFiles.length) { saveMural(images); renderMural(); }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// drag-and-drop on mural zone
+function setupMuralDropZone() {
+  const zone = document.getElementById('mural-drop-zone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) handleMuralFiles(e.dataTransfer.files);
+  });
+}
+
+let lightboxIndex = null;
+
+function openLightbox(i) {
+  lightboxIndex = i;
+  const images = loadMural();
+  const item = images[i];
+  document.getElementById('mural-lightbox-img').src = item.src;
+  document.getElementById('mural-caption-input').value = item.caption || '';
+  document.getElementById('mural-lightbox').classList.add('open');
+}
+
+function closeMuralLightbox() {
+  document.getElementById('mural-lightbox').classList.remove('open');
+  lightboxIndex = null;
+}
+
+function closeLightbox(e) {
+  if (e.target === document.getElementById('mural-lightbox')) closeMuralLightbox();
+}
+
+function updateMuralCaption() {
+  if (lightboxIndex === null) return;
+  const images = loadMural();
+  images[lightboxIndex].caption = document.getElementById('mural-caption-input').value;
+  saveMural(images);
+  renderMural();
+}
+
+function deleteMuralImage() {
+  if (lightboxIndex === null) return;
+  if (!confirm('Delete this image from the mural?')) return;
+  const images = loadMural();
+  images.splice(lightboxIndex, 1);
+  saveMural(images);
+  renderMural();
+  closeMuralLightbox();
+}
+
 // ── INIT ──
 renderEntries();
 renderTimeline(loadEntries());
 setupDropZone();
+renderMural();
+setupMuralDropZone();
 </script>
 </body>
 </html>
