@@ -1273,6 +1273,10 @@ footer .foot-links a:hover { color: var(--blue); }
     <div class="mural-grid" id="mural-grid">
       <!-- tiles injected by JS -->
     </div>
+
+    <div style="margin-top:24px;">
+      <button onclick="exportMural()" style="font-family:var(--font-body);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);background:none;border:1.5px solid var(--blue);border-radius:100px;padding:10px 20px;cursor:pointer;transition:background .15s,color .15s;" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--blue)'">Export Mural ↓</button>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -1914,11 +1918,27 @@ function importEntries(input) {
 }
 
 // ── MURAL BOARD ──
+const PUBLISHED_MURAL = [];
+
 function loadMural() {
-  try { return JSON.parse(localStorage.getItem('muralImages') || '[]'); } catch { return []; }
+  const local = (() => { try { return JSON.parse(localStorage.getItem('muralImages') || '[]'); } catch { return []; } })();
+  if (local.length > 0) return local;
+  return PUBLISHED_MURAL;
 }
 function saveMural(images) {
   localStorage.setItem('muralImages', JSON.stringify(images));
+}
+function exportMural() {
+  const images = loadMural();
+  if (images.length === 0) { alert('No mural images to export yet.'); return; }
+  const json = JSON.stringify(images, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'mural-' + new Date().toISOString().split('T')[0] + '.json';
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 function renderMural() {
