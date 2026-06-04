@@ -1441,8 +1441,23 @@ function addImageToEntry(i, base64) {
 }
 
 // ── STORAGE ──
+const PUBLISHED_ENTRIES = [
+  {
+    "week": "Guest Speakers — Eliel Johnson + James Song",
+    "date": "2026-06-02",
+    "insight": "I learned how leadership is traditionally organized and additionally interesting new tactics of diving up how leadership and roles can be structured to benefit collaboration instead of just teams.",
+    "goal": "I am pondering different goals currently, as this is to be used as a \"Diary\" I can say I am being ripped apart on my original aspirations and goals going into this program. This class just might be the unexpected deciding factor for my next adventure into a new profession. I may have squinted when looking forward for my walkabout into pursuing a career in tech.",
+    "different": "my plan is still in full effect, to be bright-eyed and bushy-tailed when it comes to these new experiences. I hear so many conflicting perspectives about the future of tech and designers. I plan on staying hopeful and trudging forward.",
+    "image": null,
+    "mood": 3,
+    "tags": ["Self-Awareness", "Reflection", "Conflict"]
+  }
+];
+
 function loadEntries() {
-  try { return JSON.parse(localStorage.getItem('lbd-diary-entries') || '[]'); } catch(e) { return []; }
+  const local = (() => { try { return JSON.parse(localStorage.getItem('lbd-diary-entries') || '[]'); } catch(e) { return []; } })();
+  if (local.length > 0) return local;
+  return PUBLISHED_ENTRIES;
 }
 function saveEntries(entries) {
   localStorage.setItem('lbd-diary-entries', JSON.stringify(entries));
