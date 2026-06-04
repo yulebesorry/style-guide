@@ -760,6 +760,45 @@ footer .foot-links a {
 
 footer .foot-links a:hover { color: var(--blue); }
 
+/* ── CLIFTON STRENGTHS ── */
+.strengths-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.strength-card {
+  display: flex;
+  gap: 20px;
+  border: 1.5px solid #eee;
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color .15s, background .15s;
+}
+.strength-card:hover {
+  border-color: var(--blue);
+  background: #f0f6ff;
+}
+.strength-rank {
+  font-family: var(--font-hero);
+  font-size: 32px;
+  color: var(--blue);
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0.3;
+}
+.strength-name {
+  font-family: var(--font-section);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.strength-desc {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* ── MURAL BOARD ── */
 .mural-upload-zone {
   border: 1.5px dashed #ddd;
@@ -1062,6 +1101,8 @@ footer .foot-links a:hover { color: var(--blue); }
     <li><a href="#timeline"><span class="entry-dot"></span>Timeline</a></li>
     <span class="nav-section-label">Weekly Entries</span>
     <div id="nav-entries"></div>
+    <span class="nav-section-label">Profile</span>
+    <li><a href="#strengths"><span class="entry-dot"></span>Strengths</a></li>
     <span class="nav-section-label">Visual</span>
     <li><a href="#mural"><span class="entry-dot"></span>Mural</a></li>
   </ul>
@@ -1201,6 +1242,53 @@ footer .foot-links a:hover { color: var(--blue); }
     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;">
       <button onclick="exportEntries()" style="font-family:var(--font-body);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);background:none;border:1.5px solid var(--blue);border-radius:100px;padding:10px 20px;cursor:pointer;transition:background .15s,color .15s;" onmouseover="this.style.background='var(--blue)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--blue)'">Export ↓</button>
       <label style="font-family:var(--font-body);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);border:1.5px solid #ddd;border-radius:100px;padding:10px 20px;cursor:pointer;transition:border-color .15s,color .15s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='#ddd';this.style.color='var(--mid)'">Import ↑<input type="file" accept=".json" onchange="importEntries(this)" style="display:none;"></label>
+    </div>
+  </section>
+
+  <!-- CLIFTON STRENGTHS -->
+  <section class="section" id="strengths">
+    <div class="section-header">
+      <span class="section-dot"></span>
+      <span class="section-num">Profile</span>
+      <h2 class="section-title">CLIFTON STRENGTHS</h2>
+    </div>
+
+    <div class="strengths-grid">
+      <div class="strength-card">
+        <div class="strength-rank">01</div>
+        <div class="strength-body">
+          <div class="strength-name">Input</div>
+          <p class="strength-desc">I have a need to collect and archive. I accumulate information, ideas, artifacts — and even relationships. The more I collect, the more connected everything becomes.</p>
+        </div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-rank">02</div>
+        <div class="strength-body">
+          <div class="strength-name">Woo</div>
+          <p class="strength-desc">I have contagious enthusiasm. I am upbeat and can get others excited about projects. Winning others over comes naturally — I thrive on making new connections.</p>
+        </div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-rank">03</div>
+        <div class="strength-body">
+          <div class="strength-name">Strategic</div>
+          <p class="strength-desc">I create alternative ways to proceed. Faced with any given scenario, I can quickly spot the relevant patterns and issues — and chart a clear path forward.</p>
+        </div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-rank">04</div>
+        <div class="strength-body">
+          <div class="strength-name">Individualization</div>
+          <p class="strength-desc">I am fascinated with the unique qualities of each person. I have a gift for figuring out how different people can work together productively.</p>
+        </div>
+      </div>
+      <div class="strength-card">
+        <div class="strength-rank">05</div>
+        <div class="strength-body">
+          <div class="strength-name">Ideation</div>
+          <p class="strength-desc">I am fascinated by ideas. I am always able to find connections between seemingly unrelated concepts — what others call disparate phenomena, I call possibility.</p>
+        </div>
+      </div>
     </div>
   </section>
 
