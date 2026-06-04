@@ -1600,6 +1600,7 @@ function renderEntries() {
             <p>${entry.different || '—'}</p>
           </div>
         </div>
+        ${entry.image ? `<img src="${entry.image}" style="width:100%;border-radius:12px;display:block;max-height:320px;object-fit:cover;margin-top:20px;">` : ''}
         <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:8px;">
           <button onclick="downloadEntryImage(${i})" style="font-family:var(--font-body);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);background:none;border:1.5px solid var(--blue);border-radius:100px;padding:5px 14px;font-weight:600;">Download ↓</button>
           <button onclick="deleteEntry(${i})" style="font-family:var(--font-body);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);background:none;border:1.5px solid #ddd;border-radius:100px;padding:5px 14px;font-weight:600;">Delete</button>
