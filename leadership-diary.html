@@ -766,8 +766,13 @@ footer .foot-links a:hover { color: var(--blue); }
   display: flex;
   align-items: baseline;
   gap: 16px;
-  padding: 14px 0;
+  padding: 14px 12px;
   border-bottom: 1px solid #eee;
+  border-radius: 8px;
+  transition: background .15s;
+}
+.strength-row:hover {
+  background: #f0f6ff;
 }
 .strength-row:last-child { border-bottom: none; }
 .strength-row-num {
