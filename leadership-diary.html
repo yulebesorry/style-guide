@@ -1554,14 +1554,16 @@ function renderEntries() {
 
   renderTimeline(entries);
 
-  visible.forEach((entry, vi) => {
+  const sortedVisible = [...visible].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  sortedVisible.forEach((entry, vi) => {
     const i = entries.indexOf(entry);
     const id = 'entry-' + i;
-    const weekNum = String(i + 1).padStart(2, '0');
+    const weekNum = String(vi + 1).padStart(2, '0');
 
     // Nav link
     const li = document.createElement('li');
-    li.innerHTML = `<a href="#${id}"><span class="entry-dot"></span>${entry.week || 'Week ' + (i+1)}</a>`;
+    li.innerHTML = `<a href="#${id}"><span class="entry-dot"></span>${entry.week || 'Week ' + weekNum}</a>`;
     navEntries.appendChild(li);
 
     // Card
@@ -1837,7 +1839,7 @@ function saveEntry() {
   if (!week || !insight) { alert('Please fill in the week name and key insight.'); return; }
 
   const entries = loadEntries();
-  entries.unshift({ week, date, insight, goal, different: diff, image: pendingImage, mood: pendingMood, tags: [...pendingTags] });
+  entries.push({ week, date, insight, goal, different: diff, image: pendingImage, mood: pendingMood, tags: [...pendingTags] });
   saveEntries(entries);
   renderEntries();
   closeModal();
