@@ -1955,6 +1955,20 @@ function renderMural() {
   `).join('');
 }
 
+function compressImage(dataUrl, callback) {
+  const img = new Image();
+  img.onload = () => {
+    const MAX = 1000;
+    const scale = Math.min(1, MAX / Math.max(img.width, img.height));
+    const canvas = document.createElement('canvas');
+    canvas.width  = Math.round(img.width  * scale);
+    canvas.height = Math.round(img.height * scale);
+    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+    callback(canvas.toDataURL('image/jpeg', 0.7));
+  };
+  img.src = dataUrl;
+}
+
 function handleMuralFiles(files) {
   const images = (() => { try { return JSON.parse(localStorage.getItem('muralImages') || '[]'); } catch { return []; } })();
   const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
@@ -1963,9 +1977,11 @@ function handleMuralFiles(files) {
   imageFiles.forEach(file => {
     const reader = new FileReader();
     reader.onload = e => {
-      images.unshift({ src: e.target.result, caption: '' });
-      loaded++;
-      if (loaded === imageFiles.length) { saveMural(images); renderMural(); }
+      compressImage(e.target.result, compressed => {
+        images.unshift({ src: compressed, caption: '' });
+        loaded++;
+        if (loaded === imageFiles.length) { saveMural(images); renderMural(); }
+      });
     };
     reader.readAsDataURL(file);
   });
