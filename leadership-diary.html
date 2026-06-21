@@ -1956,7 +1956,7 @@ function renderMural() {
 }
 
 function handleMuralFiles(files) {
-  const images = loadMural();
+  const images = (() => { try { return JSON.parse(localStorage.getItem('muralImages') || '[]'); } catch { return []; } })();
   const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
   if (!imageFiles.length) return;
   let loaded = 0;
