@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "build": "codex build",
+    "watch": "codex watch",
+    "serve": "codex serve"
+  },
   "dependencies": {
-    "claude": "^0.1.1"
+    "claude": "^0.1.1",
+    "codex": "^0.2.3"
   }
 }
